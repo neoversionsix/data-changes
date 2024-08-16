@@ -43,6 +43,14 @@
         #error {
             color: red;
         }
+        #log-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +78,10 @@
         <p>Rows in A not in B: <span id="non-existing-rows-count"></span></p>
         <button id="download-new-rows" disabled>Download New Rows</button>
         <button id="download-non-existing-rows" disabled>Download Non-existing Rows</button>
+    </div>
+    <div id="log-container">
+        <h3>Console Log:</h3>
+        <pre id="log-content"></pre>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
