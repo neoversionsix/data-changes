@@ -1,3 +1,13 @@
+function fetchLogs() {
+    axios.get('/logs')
+        .then(function (response) {
+            document.getElementById('log-content').textContent = response.data.join('\n');
+        })
+        .catch(function (error) {
+            console.error('Error fetching logs:', error);
+        });
+}
+
 document.getElementById('upload-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -40,4 +50,42 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
         });
 });
 
-// ... (rest of the code remains the same)
+// Add event listeners for download buttons if they exist
+const downloadNewRowsButton = document.getElementById('download-new-rows');
+const downloadNonExistingRowsButton = document.getElementById('download-non-existing-rows');
+
+if (downloadNewRowsButton) {
+    downloadNewRowsButton.addEventListener('click', function() {
+        downloadRows('new_rows');
+    });
+}
+
+if (downloadNonExistingRowsButton) {
+    downloadNonExistingRowsButton.addEventListener('click', function() {
+        downloadRows('non_existing_rows');
+    });
+}
+
+function downloadRows(downloadType) {
+    const formData = new FormData(document.getElementById('upload-form'));
+    formData.append('download_type', downloadType);
+
+    axios.post('/download', formData, { responseType: 'blob' })
+        .then(function (response) {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', downloadType === 'new_rows' ? 'new_rows.xlsx' : 'non_existing_rows.xlsx');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            fetchLogs();
+        })
+        .catch(function (error) {
+            console.error('Download error:', error);
+            fetchLogs();
+        });
+}
+
+// Fetch logs when the page loads
+fetchLogs();
