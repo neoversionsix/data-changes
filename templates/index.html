@@ -54,15 +54,16 @@
     </style>
 </head>
 <body>
-    <h1>Excel Comparison Tool</h1>
+    <h1>Excel Data Comparison Tool</h1>
     <form id="upload-form">
         <div class="form-group">
-            <label for="file_a">Sheet A:</label>
+            <label for="file_a">A:</label>
             <input type="file" id="file_a" name="file_a" accept=".xlsx" required>
         </div>
         <div class="form-group">
-            <label for="file_b">Sheet B:</label>
+            <label for="file_b" class="visually-hidden">B:</label>
             <input type="file" id="file_b" name="file_b" accept=".xlsx" required>
+            <p>This is the new dataset with new items and deleted items</p>
         </div>
         <div class="form-group">
             <label for="key_column">Key Column:</label>
