@@ -4,20 +4,27 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 
     document.getElementById('loading').style.display = 'block';
     document.getElementById('results').style.display = 'none';
+    document.getElementById('error').style.display = 'none';
 
     axios.post('/process', formData, { timeout: 300000 }) // 5-minute timeout
         .then(function (response) {
             document.getElementById('loading').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('new-rows-count').textContent = response.data.new_rows_count;
-            document.getElementById('non-existing-rows-count').textContent = response.data.non_existing_rows_count;
-            document.getElementById('download-new-rows').disabled = false;
-            document.getElementById('download-non-existing-rows').disabled = false;
+            if (response.data.error) {
+                document.getElementById('error').textContent = response.data.error;
+                document.getElementById('error').style.display = 'block';
+            } else {
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('new-rows-count').textContent = response.data.new_rows_count;
+                document.getElementById('non-existing-rows-count').textContent = response.data.non_existing_rows_count;
+                document.getElementById('download-new-rows').disabled = false;
+                document.getElementById('download-non-existing-rows').disabled = false;
+            }
         })
         .catch(function (error) {
             document.getElementById('loading').style.display = 'none';
             console.error('Error:', error);
-            alert('An error occurred while processing the files. This might be due to the size of the files or a server timeout.');
+            document.getElementById('error').textContent = 'An error occurred while processing the files. Please check the console for more details.';
+            document.getElementById('error').style.display = 'block';
         });
 });
 
@@ -26,6 +33,7 @@ function downloadFile(downloadType) {
     formData.append('download_type', downloadType);
 
     document.getElementById('loading').style.display = 'block';
+    document.getElementById('error').style.display = 'none';
 
     axios.post('/download', formData, { responseType: 'blob', timeout: 300000 }) // 5-minute timeout
         .then(function (response) {
@@ -41,7 +49,8 @@ function downloadFile(downloadType) {
         .catch(function (error) {
             document.getElementById('loading').style.display = 'none';
             console.error('Error:', error);
-            alert('An error occurred while downloading the file. This might be due to the size of the file or a server timeout.');
+            document.getElementById('error').textContent = 'An error occurred while downloading the file. Please check the console for more details.';
+            document.getElementById('error').style.display = 'block';
         });
 }
 

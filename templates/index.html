@@ -34,11 +34,14 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
-        #results, #loading {
+        #results, #loading, #error {
             margin-top: 20px;
         }
-        #loading {
+        #loading, #error {
             display: none;
+        }
+        #error {
+            color: red;
         }
     </style>
 </head>
@@ -60,6 +63,7 @@
         <button type="submit">Process Files</button>
     </form>
     <div id="loading">Processing... This may take a while for large files.</div>
+    <div id="error"></div>
     <div id="results" style="display: none;">
         <h2>Results:</h2>
         <p>New rows in B: <span id="new-rows-count"></span></p>
