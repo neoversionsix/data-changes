@@ -57,16 +57,21 @@
     <h1>Excel Data Comparison Tool</h1>
     <form id="upload-form">
         <div class="form-group">
-            <label for="file_a">A:</label>
+            <h3>Current Table</h3>
+            <p>This is the current extract from database</p>
+            <label for="file_a">Current</label>
             <input type="file" id="file_a" name="file_a" accept=".xlsx" required>
         </div>
         <div class="form-group">
-            <label for="file_b" class="visually-hidden">B:</label>
+            <h3>Updated Table</h3>
+            <p>This is the new dataset. The one with new items and deleted items when compared with A</p>
+            <label for="file_b" class="visually-hidden">Updated</label>
             <input type="file" id="file_b" name="file_b" accept=".xlsx" required>
-            <p>This is the new dataset with new items and deleted items</p>
         </div>
         <div class="form-group">
-            <label for="key_column">Key Column:</label>
+            <h3>Matching Column</h3>
+            <p>Enter the name of the column to use when comparing rows (must be same name in both tables).</p>
+            <label for="key_column">Key Column</label>
             <input type="text" id="key_column" name="key_column" required>
         </div>
         <button type="submit">Process Files</button>
@@ -75,10 +80,10 @@
     <div id="error"></div>
     <div id="results" style="display: none;">
         <h2>Results:</h2>
-        <p>New rows in B: <span id="new-rows-count"></span></p>
-        <p>Rows in A not in B: <span id="non-existing-rows-count"></span></p>
+        <p>New rows in Updated Table: <span id="new-rows-count"></span></p>
+        <p>Rows in Current Table that are not in the Updated Table: <span id="non-existing-rows-count"></span></p>
         <button id="download-new-rows" disabled>Download New Rows</button>
-        <button id="download-non-existing-rows" disabled>Download Non-existing Rows</button>
+        <button id="download-non-existing-rows" disabled>Download Rows To Deactivate</button>
     </div>
     <div id="log-container">
         <h3>Console Log:</h3>
