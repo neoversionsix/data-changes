@@ -11,6 +11,10 @@ app = Flask(__name__)
 
 logs = []
 
+file_a = None
+file_b = None
+key_column = None
+
 def log_message(message):
     logs.append(message)
 
